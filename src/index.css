@@ -1,0 +1,473 @@
+@tailwind utilities;
+
+:root {
+  /* ===== Theme Colors ===== */
+  --color-primary: #eab308; /* amber-500 */
+  --color-primary-dark: #ca8a04; /* amber-600 */
+  --color-primary-light: #fef3c7; /* amber-100 */
+  --color-accent: #f59e0b;
+  --color-bg: #fffaf0;
+  --color-bg-light: #fffbeb;
+  --color-text: #1f2937;
+  --color-text-light: #6b7280;
+  --color-border: #fde68a;
+  --color-error: #dc2626;
+  --color-success: #10b981;
+  --color-modal-bg: #fffdfa;
+
+  /* ===== Radii, Shadows, Transitions ===== */
+  --radius-sm: 6px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --shadow-sm: 0 1px 4px rgba(0, 0, 0, 0.08);
+  --shadow-md: 0 4px 12px rgba(0, 0, 0, 0.15);
+  --shadow-lg: 0 8px 24px rgba(0, 0, 0, 0.2);
+  --transition: all 0.3s ease;
+
+  /* ===== Font Sizes ===== */
+  --font-xs: 12px;
+  --font-sm: 14px;
+  --font-md: 16px;
+  --font-lg: 18px;
+  --font-xl: 20px;
+}
+
+/* Base Table Styles */
+.ant-table {
+  background: transparent;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.ant-table-thead > tr > th {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%) !important;
+  color: white !important;
+  font-weight: 600 !important;
+  font-size: 14px !important;
+  letter-spacing: 0.5px !important;
+  text-transform: uppercase !important;
+  border: none !important;
+  padding: 16px 12px !important;
+}
+
+.ant-table-thead > tr > th::before {
+  display: none !important;
+}
+
+.ant-table-tbody > tr {
+  background: white;
+  transition: all 0.3s ease;
+}
+
+.ant-table-tbody > tr:hover {
+  background: #fffbf0 !important;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(217, 119, 6, 0.15);
+}
+
+.ant-table-tbody > tr > td {
+  border-bottom: 1px solid #fde68a !important;
+  padding: 16px 12px !important;
+  font-size: 14px !important;
+  color: #1f2937 !important;
+}
+
+.ant-table-wrapper::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+.ant-table-wrapper::-webkit-scrollbar-track {
+  background: #fef3c7;
+  border-radius: 4px;
+}
+
+.ant-table-wrapper::-webkit-scrollbar-thumb {
+  background: #f59e0b;
+  border-radius: 4px;
+}
+
+.ant-table-wrapper::-webkit-scrollbar-thumb:hover {
+  background: #d97706;
+}
+
+/* Entry Form Styles */
+.modern-modal .ant-modal-content {
+  background: linear-gradient(135deg, #fefcf3 0%, #fff8e7 100%);
+  border-radius: 16px;
+  border: 1px solid rgba(217, 119, 6, 0.2);
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+  padding: 0;
+}
+
+.modern-modal .ant-modal-header {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  border-radius: 16px 16px 0 0;
+  border-bottom: none;
+  padding: 20px 24px;
+}
+
+.modern-modal .ant-modal-title {
+  color: white;
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+}
+
+.modern-modal .ant-modal-close {
+  color: white;
+  top: 16px;
+  right: 20px;
+}
+
+.modern-modal .ant-modal-close:hover {
+  color: #fef3c7;
+}
+
+.modern-modal .ant-modal-body {
+  padding: 24px;
+  background: white;
+  margin: 16px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.modern-modal .ant-form-item-label > label {
+  color: #374151;
+  font-weight: 600;
+  font-size: 14px;
+  height: auto;
+}
+
+.modern-modal
+  .ant-form-item-label
+  > label.ant-form-item-required:not(
+    .ant-form-item-required-mark-optional
+  )::before {
+  color: #f59e0b;
+}
+
+.modern-modal .ant-input,
+.modern-modal .ant-input-number,
+.modern-modal .ant-select-selector,
+.modern-modal .ant-input-number-input {
+  border-radius: 8px;
+  border: 2px solid #fde68a;
+  transition: all 0.3s ease;
+  padding: 8px 12px;
+}
+
+.modern-modal .ant-input:hover,
+.modern-modal .ant-input-number:hover,
+.modern-modal .ant-select-selector:hover {
+  border-color: #fbbf24;
+}
+
+.modern-modal .ant-input:focus,
+.modern-modal .ant-input-number-focused,
+.modern-modal .ant-select-focused .ant-select-selector {
+  border-color: #f59e0b;
+  box-shadow: 0 0 0 3px rgba(245, 158, 11, 0.1);
+}
+
+.modern-modal .ant-input-number {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.modern-modal .ant-select-selector {
+  padding: 4px 12px !important;
+  height: auto !important;
+}
+
+.modern-modal .ant-select-selection-item {
+  line-height: 32px !important;
+}
+
+.modern-modal textarea.ant-input {
+  resize: vertical;
+}
+
+.modern-modal .ant-form-item {
+  margin-bottom: 20px;
+}
+
+.modern-modal .ant-btn {
+  border-radius: 8px;
+  font-weight: 600;
+  height: auto;
+  padding: 10px 24px;
+  transition: all 0.3s ease;
+}
+
+.modern-modal .ant-btn-default {
+  border: 2px solid #e5e7eb;
+  color: #6b7280;
+}
+
+.modern-modal .ant-btn-default:hover {
+  border-color: #d1d5db;
+  color: #374151;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.modern-modal .ant-btn-primary {
+  background: linear-gradient(135deg, #d97706 0%, #f59e0b 100%);
+  border: none;
+  color: white;
+  box-shadow: 0 4px 6px rgba(217, 119, 6, 0.3);
+}
+
+.modern-modal .ant-btn-primary:hover {
+  background: linear-gradient(135deg, #b45309 0%, #d97706 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(217, 119, 6, 0.4);
+}
+
+.modern-modal .ant-form-item-explain-error {
+  color: #dc2626;
+  font-size: 12px;
+  margin-top: 4px;
+}
+
+/* Message styling */
+.ant-message-notice-content {
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+}
+
+.ant-message-success .anticon {
+  color: #10b981;
+}
+
+.ant-message-error .anticon {
+  color: #ef4444;
+}
+
+/* ============================================ */
+/* RESPONSIVE STYLES */
+/* ============================================ */
+
+/* Tablet Styles (768px - 1023px) */
+@media (max-width: 1023px) {
+  .ant-table-thead > tr > th {
+    padding: 12px 8px !important;
+    font-size: 12px !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 12px 8px !important;
+    font-size: 13px !important;
+  }
+
+  .modern-modal .ant-modal-title {
+    font-size: 18px;
+  }
+
+  .modern-modal .ant-modal-body {
+    padding: 20px;
+    margin: 12px;
+  }
+
+  .modern-modal .ant-btn {
+    padding: 8px 20px;
+    font-size: 14px;
+  }
+}
+
+/* Mobile Styles (max-width: 767px) */
+@media (max-width: 767px) {
+  /* Table Responsive */
+  .ant-table-thead > tr > th {
+    padding: 10px 6px !important;
+    font-size: 11px !important;
+    letter-spacing: 0.3px !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 10px 6px !important;
+    font-size: 12px !important;
+  }
+
+  .ant-table-tbody > tr:hover {
+    transform: none;
+  }
+
+  /* Hide less critical columns on mobile */
+  .ant-table-thead > tr > th:nth-child(4), /* Director */
+  .ant-table-thead > tr > th:nth-child(6), /* Location */
+  .ant-table-tbody > tr > td:nth-child(4),
+  .ant-table-tbody > tr > td:nth-child(6) {
+    display: none;
+  }
+
+  /* Modal Responsive */
+  .modern-modal .ant-modal {
+    max-width: calc(100vw - 32px) !important;
+    margin: 16px auto !important;
+  }
+
+  .modern-modal .ant-modal-content {
+    border-radius: 12px;
+  }
+
+  .modern-modal .ant-modal-header {
+    padding: 16px 20px;
+    border-radius: 12px 12px 0 0;
+  }
+
+  .modern-modal .ant-modal-title {
+    font-size: 16px;
+  }
+
+  .modern-modal .ant-modal-close {
+    top: 12px;
+    right: 16px;
+  }
+
+  .modern-modal .ant-modal-body {
+    padding: 16px;
+    margin: 12px;
+  }
+
+  /* Form grid to single column on mobile */
+  .modern-modal .ant-form .grid {
+    display: block !important;
+  }
+
+  .modern-modal .ant-form-item {
+    margin-bottom: 16px;
+  }
+
+  .modern-modal .ant-form-item-label > label {
+    font-size: 13px;
+  }
+
+  .modern-modal .ant-input,
+  .modern-modal .ant-input-number,
+  .modern-modal .ant-select-selector {
+    font-size: 14px;
+    padding: 6px 10px;
+  }
+
+  .modern-modal .ant-btn {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+
+  /* Stack action buttons on very small screens */
+  .modern-modal .ant-form-item:last-child .flex {
+    flex-direction: column-reverse;
+    gap: 8px;
+  }
+
+  .modern-modal .ant-form-item:last-child .ant-btn {
+    width: 100%;
+  }
+}
+
+/* Extra Small Mobile (max-width: 480px) */
+@media (max-width: 480px) {
+  .ant-table-thead > tr > th {
+    padding: 8px 4px !important;
+    font-size: 10px !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 8px 4px !important;
+    font-size: 11px !important;
+  }
+
+  /* Hide even more columns on small mobile */
+  .ant-table-thead > tr > th:nth-child(5), /* Budget */
+  .ant-table-thead > tr > th:nth-child(7), /* Duration */
+  .ant-table-thead > tr > th:nth-child(8), /* Year/Time */
+  .ant-table-tbody > tr > td:nth-child(5),
+  .ant-table-tbody > tr > td:nth-child(7),
+  .ant-table-tbody > tr > td:nth-child(8) {
+    display: none;
+  }
+
+  /* Adjust poster size */
+  .ant-table img {
+    width: 36px !important;
+    height: 48px !important;
+  }
+
+  /* Modal adjustments */
+  .modern-modal .ant-modal {
+    max-width: calc(100vw - 16px) !important;
+    margin: 8px auto !important;
+  }
+
+  .modern-modal .ant-modal-body {
+    padding: 12px;
+    margin: 8px;
+  }
+
+  .modern-modal .ant-modal-header {
+    padding: 12px 16px;
+  }
+
+  .modern-modal .ant-modal-title {
+    font-size: 15px;
+  }
+}
+
+/* Large Desktop (min-width: 1440px) */
+@media (min-width: 1440px) {
+  .ant-table-thead > tr > th {
+    padding: 18px 14px !important;
+    font-size: 15px !important;
+  }
+
+  .ant-table-tbody > tr > td {
+    padding: 18px 14px !important;
+    font-size: 15px !important;
+  }
+
+  .modern-modal .ant-modal-title {
+    font-size: 22px;
+  }
+
+  .modern-modal .ant-modal-body {
+    padding: 28px;
+  }
+}
+
+/* Landscape mobile devices */
+@media (max-height: 600px) and (orientation: landscape) {
+  .modern-modal .ant-modal {
+    max-height: 90vh;
+    overflow-y: auto;
+  }
+
+  .modern-modal .ant-modal-body {
+    max-height: calc(90vh - 140px);
+    overflow-y: auto;
+  }
+}
+
+/* Touch device optimizations */
+@media (hover: none) and (pointer: coarse) {
+  .ant-table-tbody > tr:active {
+    background: #fffbf0 !important;
+  }
+
+  .modern-modal .ant-btn:active {
+    transform: scale(0.98);
+  }
+
+  /* Increase tap targets for better mobile UX */
+  .ant-btn {
+    min-height: 44px;
+    min-width: 44px;
+  }
+
+  .modern-modal .ant-input,
+  .modern-modal .ant-input-number,
+  .modern-modal .ant-select-selector {
+    min-height: 44px;
+  }
+}
