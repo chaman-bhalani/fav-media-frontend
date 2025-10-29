@@ -10,7 +10,8 @@
     "lint": "eslint .",
     "tw:init": "tailwindcss init -p",
     "tw:build": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
-    "serve": "serve dist"
+    "serve": "serve dist",
+    "vercel-build": "tsc -b && vite build"
   },
   "dependencies": {
     "antd": "^5.27.6",
