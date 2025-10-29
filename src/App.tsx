@@ -1,8 +1,9 @@
-import { useState } from "react";
-import EntriesTable from "./components/entriesTable";
-import EntryForm from "./components/entryForm";
+import React, { Suspense, useState } from "react";
 
-function App() {
+const EntriesTable = React.lazy(() => import("./components/entriesTable"));
+const EntryForm = React.lazy(() => import("./components/entryForm"));
+
+export default function App() {
   const [isOpen, setIsOpen] = useState(false);
   const [editing, setEditing] = useState<any | null>(null);
   const [key, setKey] = useState(0); // trick to refresh table
@@ -27,22 +28,24 @@ function App() {
         </div>
       </div>
 
-      <EntriesTable
-        onEdit={(e) => {
-          setEditing(e);
-          setIsOpen(true);
-        }}
-        key={key}
-      />
+      <Suspense>
+        <EntriesTable
+          onEdit={(e) => {
+            setEditing(e);
+            setIsOpen(true);
+          }}
+          key={key}
+        />
+      </Suspense>
 
-      <EntryForm
-        isOpen={isOpen}
-        onRequestClose={() => setIsOpen(false)}
-        onSaved={() => setKey((k) => k + 1)}
-        initial={editing}
-      />
+      <Suspense>
+        <EntryForm
+          isOpen={isOpen}
+          onRequestClose={() => setIsOpen(false)}
+          onSaved={() => setKey((k) => k + 1)}
+          initial={editing}
+        />
+      </Suspense>
     </div>
   );
 }
-
-export default App;

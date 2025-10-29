@@ -1,16 +1,16 @@
 {
   "name": "fav-media-frontend",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "tsc -b && vite build",
-    "lint": "eslint .",
     "preview": "vite preview",
+    "lint": "eslint .",
     "tw:init": "tailwindcss init -p",
-    "tailwind": "tailwindcss",
-    "tw:build": "npx @tailwindcss/cli -i ./src/input.css -o ./src/output.css --watch"
+    "tw:build": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
+    "serve": "serve dist"
   },
   "dependencies": {
     "antd": "^5.27.6",
@@ -37,5 +37,8 @@
     "typescript": "~5.9.3",
     "typescript-eslint": "^8.45.0",
     "vite": "^7.1.7"
+  },
+  "optionalDependencies": {
+    "serve": "^14.2.3"
   }
 }

@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import { Table, Button, Space, Popconfirm, Tag } from "antd";
 import { EditOutlined, DeleteOutlined } from "@ant-design/icons";
 import { deleteEntry, fetchEntries } from "../api";
@@ -13,6 +13,7 @@ export default function EntriesTable({
   const [nextCursor, setNextCursor] = useState<number | null>(null);
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
+  const hasLoadedRef = useRef(false);
 
   const loadMore = useCallback(async () => {
     if (loading || !hasMore) return;
@@ -28,11 +29,14 @@ export default function EntriesTable({
     } finally {
       setLoading(false);
     }
-  }, [loading, nextCursor, hasMore]);
+  }, [nextCursor, hasMore, loading]);
 
   useEffect(() => {
+    // Prevent double loading in StrictMode
+    if (hasLoadedRef.current) return;
+    hasLoadedRef.current = true;
     loadMore();
-  }, []);
+  }, []); // Remove loadMore from dependencies
 
   const handleDelete = async (id: number) => {
     try {
