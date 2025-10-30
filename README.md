@@ -1,77 +1,147 @@
-<<<<<<< HEAD
 # fav-media-frontend
-=======
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Frontend for "Favorite Movies & TV Shows" — a Vite + React + TypeScript app using Ant Design and Tailwind.
 
-Currently, two official plugins are available:
+## Quick start
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+Requirements:
 
-## React Compiler
+- Node.js 18+ (or compatible)
+- npm
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+Install and run locally:
 
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
-
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+```bash
+npm ci
+npm run dev
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+Build and preview:
+
+```bash
+npm run build
+npm run preview
+# or serve built output
+npm run serve
+```
+
+Key npm scripts (package.json):
+
+- dev — vite dev server
+- build — `tsc -b && vite build`
+- vercel-build — same as build (used by Vercel)
+- preview — vite preview
+- serve — serve dist (optional)
+
+## Project structure
+
+- src/
+  - api.ts
+  - main.tsx
+  - App.tsx
+  - components/
+    - entriesTable.tsx
+    - entryForm.tsx
+  - hooks/
+    - useInfiniteScroll.ts
+  - styles: input.css, index.css, output.css
+- vite.config.ts
+- tsconfig.node.json
+- vercel.json
+
+## Vercel deployment
+
+Recommended Vercel project settings (Import → Configure Project):
+
+- Root Directory: (leave blank) or `.`
+- Install Command: `npm ci`
+- Build Command: `npm run vercel-build` (fallback: `npm run build` or `vite build`)
+- Output Directory: `dist`
+
+vercel.json is included and rewrites all routes to index.html for SPA routing.
+
+CLI deploy:
+
+```powershell
+npm i -g vercel
+vercel login
+vercel --prod
+```
+
+Note: If `tsc -b` fails on Vercel, change Build Command to `vite build` until TS issues are resolved.
+
+## CORS / Backend note
+
+If you see this in browser console:
+`Access-Control-Allow-Origin: http://localhost:5173` but your site origin is `your -frontend-url` — the backend only allows localhost, so the browser blocks requests.
+
+Fix (recommended): update backend CORS to include your production origin. Example (Express):
+
+```javascript
+// add to backend
+import cors from "cors";
+const allowed = ["http://localhost:5173", "your-frontend-url"];
+app.use(
+  cors({
+    origin: (origin, cb) => cb(null, !origin || allowed.includes(origin)),
+    credentials: true,
+  })
+);
+```
+
+Or for FastAPI:
+
+```python
+from starlette.middleware.cors import CORSMiddleware
+app.add_middleware(CORSMiddleware, allow_origins=["http://localhost:5173","your-frontend-url"], allow_methods=["*"], allow_headers=["*"], allow_credentials=True)
+```
+
+Dev proxy (local only) — add to vite.config.ts to avoid CORS during development:
 
 ```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
+server: {
+  proxy: {
+    '/api': {
+      target: 'your-backend-url',
+      changeOrigin: true,
+      secure: true
+    }
+  }
+}
 ```
->>>>>>> 6a216a6 (initial commit)
+
+## Bundle size / Ant Design chunking
+
+Large `antd` chunk observed. Two options:
+
+- Split antd into per-component chunks via rollup manualChunks.
+- Lazy-load heavy screens with React.lazy/Suspense.
+
+Suggested manualChunks (apply to vite.config.ts) to break antd into smaller pieces:
+
+```typescript
+// filepath:
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+
+export default defineConfig({
+  plugins: [react()],
+  // ...existing code...
+  build: {
+    // ...existing build settings...
+    rollupOptions: {
+      output: {
+        manualChunks(id) {
+          if (!id) return;
+          if (id.includes("node_modules/antd/")) {
+            const m = id.match(/node_modules\/antd\/(?:es|lib)\/([^/]+)/);
+            return m ? `antd-${m[1]}` : "antd";
+          }
+          if (id.includes("node_modules")) return "vendor";
+        },
+      },
+    },
+    chunkSizeWarningLimit: 500,
+  },
+});
+```
